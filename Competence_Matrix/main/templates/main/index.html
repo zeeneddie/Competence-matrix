@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <div onclick="tree_toggle(arguments[0])">
+      <div>Tree</div>
+      <ul class="Container">
+        <li class="Node IsRoot IsLast ExpandClosed">
+          <div class="Expand"></div>
+          <div class="Content">Root</div>
+          <ul class="Container">
+            <li class="Node ExpandClosed">
+              <div class="Expand"></div>
+              <div class="Content">Item 1</div>
+              <ul class="Container">
+                <li class="Node ExpandLeaf IsLast">
+                  <div class="Expand"></div>
+                  <div class="Content">Item 1.2</div>
+                </li>
+              </ul>
+            </li>
+              <li class="Node ExpandLeaf IsLast">
+              <div class="Expand"></div>
+              <div class="Content">Item 2</div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+</body>
+</html>
