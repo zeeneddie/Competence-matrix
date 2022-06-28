@@ -6,7 +6,7 @@
     list-style-type: none;
 }
 .Node {
-    background-image : url(img/i.gif);
+    background-image : url(/static/main/img/i.gif);
     background-position : top left;
     background-repeat : repeat-y;
     margin-left: 18px;
@@ -16,17 +16,17 @@
     margin-left: 0;
 }
 .IsLast {
-    background-image: url(img/i_half.gif);
+    background-image: url(/static/main/img/i_half.gif);
     background-repeat : no-repeat;
 }
 .ExpandOpen .Expand {
-    background-image: url(img/expand_minus.gif);
+    background-image: url(/static/main/img/expand_minus.gif);
 }
 .ExpandClosed .Expand {
-    background-image: url(img/expand_plus.gif);
+    background-image: url(/static/main/img/expand_plus.gif);
 }
 .ExpandLeaf .Expand {
-    background-image: url(img/expand_leaf.gif);
+    background-image: url(/static/main/img/expand_leaf.gif);
 }
 .Content {
     min-height: 18px;
@@ -44,7 +44,7 @@
     width: 18px;
     height: 18px;
     float: left;
-    background-image: url(img/expand_loading.gif);
+    background-image: url(/static/main/img/expand_loading.gif);
 }
 .ExpandOpen .Container {
 	display: block;
