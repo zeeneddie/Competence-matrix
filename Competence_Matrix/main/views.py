@@ -1,26 +1,26 @@
 from django.shortcuts import render
-from .models import Model
-import json
-import os
-import codecs
+from .models import Model, KSP
+from .json import loadJSON
 
 def index(request):
     data = loadJSON()
-    competence = []
+    modelList = []
     for currentCompetence in data['competence']:
-        indicator = []
-        KSP = []
+        indicatorList = []
         for currentIndicator in currentCompetence["indicator"]:
+            KSPList = []
             for currentKSP in currentIndicator["KSP"]:
-                KSP.append(Model("KSP", currentKSP["name"], currentKSP["description"], None))
-            indicator.append(Model("indicator", currentIndicator["name"], currentIndicator["description"], KSP))
-        competence.append(Model("competence", currentCompetence["name"], currentCompetence["description"], indicator))
-    return render(request, 'main/index.html', {'competence': competence})
-
-def loadJSON():
-    file = codecs.open(os.path.dirname(os.path.abspath(__file__)) + "\DB.json", 'r', "utf_8_sig")
-    data = json.load(file)
-    return data
-def saveJSON(data):
-    file = codecs.open(os.path.dirname(os.path.abspath(__file__)) + "\DB.json", 'w', "utf_8_sig")
-    json.dump(data, file, indent=3)
+                isKnowledge = False
+                isSkills = False
+                isPossession = False
+                match currentKSP["name"][0]:
+                    case 'З':
+                        isKnowledge = True
+                    case 'У':
+                        isSkills = True
+                    case 'В':
+                        isPossession = True
+                KSPList.append(KSP(currentKSP["name"], currentKSP["description"], isKnowledge, isSkills, isPossession))
+            indicatorList.append(Model(currentIndicator["name"], currentIndicator["description"], KSPList))
+        modelList.append(Model(currentCompetence["name"], currentCompetence["description"], indicatorList))
+    return render(request, 'main/index.html', {'modelList': modelList})
