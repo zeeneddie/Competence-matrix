@@ -1,5 +1,4 @@
 from enum import Enum
-from telnetlib import STATUS
 
 class ModelType(Enum):
     Competence = 1

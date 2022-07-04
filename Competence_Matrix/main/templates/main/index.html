@@ -11,6 +11,23 @@
 {% endblock %}
 
 
-{% block tree %}
-    {{ tree | safe }}
-{% endblock %}
+{% block tree %} {{ tree | safe }} {% endblock %}
+
+{% block competenceList %} {{ competenceList | safe }} {% endblock %}
+{% block competenceInfo %} {{ competenceInfo | safe }} {% endblock %}
+
+
+{% block indicatorList %} {{ indicatorList | safe }} {% endblock %}
+{% block indicatorInfo %} {{ indicatorInfo | safe }} {% endblock %}
+
+
+{% block knowledgeList %} {{ knowledgeList | safe }} {% endblock %}
+{% block knowledgeInfo %} {{ knowledgeInfo | safe }} {% endblock %}
+
+
+{% block skillsList %} {{ skillsList | safe }} {% endblock %}
+{% block skillsInfo %} {{ skillsInfo | safe }} {% endblock %}
+
+
+{% block possessionList %} {{ possessionList | safe }} {% endblock %}
+{% block possessionInfo %} {{ possessionInfo | safe }} {% endblock %}

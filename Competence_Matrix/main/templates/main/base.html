@@ -13,30 +13,50 @@
     <div class="row_divs">
         <div class="col_div">
             <div class="row_divs">
+
+
+                <!--Компетенции-->
+
+
                 <div class="high_div">
                     <p class="lead1">Компетенции</p>
-                    <section class="sec_row">
-                        <select class="form-select" size="3" aria-label="size 3 select example"></select>
-                        <div class="form-floating">
-                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea1" style="height: 300px; border: 1px solid rgb(92, 139, 215); resize: none; "></textarea>
-                            <label for="floatingTextarea1">Описание</label>
-                        </div>
-                    </section>
-                    <section class="sec_row2">
-                        <button type="button" class="btn2 btn2-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalPush">Доб.</button>
-                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalChange">Ред.</button>
-                        <button type="button" class="btn2 btn2-outline-primary">Удал.</button>
-                    </section>
+                    <form action="{% url 'modelInfo' %}" method="post">
+                        {% csrf_token %}
+                        <section class="sec_row">
+                            <select onchange="this.form.submit()" name="modelName" class="form-select" size="3" aria-label="size 3 select example">
+                                {% block competenceList %} {% endblock %}
+                            </select>
+                            <div class="form-floating">
+                                <textarea readonly class="form-control" placeholder="Leave a comment here" id="floatingTextarea1" style="height: 300px; border: 1px solid rgb(92, 139, 215); resize: none; ">{% block competenceInfo %}{% endblock %}</textarea>
+                                <label for="floatingTextarea1">Описание</label>
+                            </div>
+                        </section>
+                        <section class="sec_row2">
+                            <button type="button" class="btn2 btn2-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalPush">Доб.</button>
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalChange">Ред.</button>
+                            <button type="button" class="btn2 btn2-outline-primary">Удал.</button>
+                        </section>
+                    </form>
                 </div>
+
+
+                <!--Индикаторы-->
+
+
                 <div class="high_div2">
                     <p class="lead2">Индикаторы</p>
-                    <section class="sec_row">
-                        <select class="form-select" size="3" aria-label="size 3 select example"></select>
-                        <div class="form-floating">
-                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 300px; border: 1px solid rgb(92, 139, 215); resize: none; "></textarea>
-                            <label for="floatingTextarea2">Описание</label>
-                        </div>
-                    </section>
+                    <form action="{% url 'modelInfo' %}" method="post">
+                        {% csrf_token %}
+                        <section class="sec_row">
+                            <select onchange="this.form.submit()" name="modelName" class="form-select" size="3" aria-label="size 3 select example">
+                                {% block indicatorList %} {% endblock %}
+                            </select>
+                            <div class="form-floating">
+                                <textarea readonly class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 300px; border: 1px solid rgb(92, 139, 215); resize: none; ">{% block indicatorInfo %}{% endblock %}</textarea>
+                                <label for="floatingTextarea2">Описание</label>
+                            </div>
+                        </section>
+                    </form>
                     <section class="sec_row3">
                         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalPush">Доб.</button>
                         <button type="button" class="btn2 btn2-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalChange">Ред.</button>
@@ -47,11 +67,16 @@
             <img src="/static/main/img/line2.png">
         </div>
         <div class="high_div3">
+
+
+            <!--Знания-->
+
+
             <p class="lead2">Знания</p>
             <section class="sec_row4">
                 <select class="form-select f-s-n" size="3" aria-label="size 3 select example">     </select>
                 <div class="form-floating f-f-n">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea3" style="height: 100px; border: 1px solid rgb(92, 139, 215); resize: none; "></textarea>
+                    <textarea readonly class="form-control" placeholder="Leave a comment here" id="floatingTextarea3" style="height: 100px; border: 1px solid rgb(92, 139, 215); resize: none; "></textarea>
                     <label for="floatingTextarea3">Описание</label>
                 </div>
             </section>
@@ -60,11 +85,16 @@
                 <button type="button" class="btn btn3 btn-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalChange">Ред.</button>
                 <button type="button" class="btn2 btn3 btn2-outline-primary">Удал.</button>
             </section>
+
+
+            <!--Умения-->
+
+
             <p class="lead3">Умения</p>
             <section class="sec_row4">
                 <select class="form-select f-s-n" size="3" aria-label="size 3 select example"></select>
                 <div class="form-floating f-f-n">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea4" style="height: 100px; border: 1px solid rgb(92, 139, 215); resize: none; "></textarea>
+                    <textarea readonly class="form-control" placeholder="Leave a comment here" id="floatingTextarea4" style="height: 100px; border: 1px solid rgb(92, 139, 215); resize: none; "></textarea>
                     <label for="floatingTextarea4">Описание</label>
                 </div>
             </section>
@@ -73,11 +103,16 @@
                 <button type="button" class="btn2 btn3 btn2-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalChange">Ред.</button>
                 <button type="button" class="btn btn3 btn-outline-primary">Удал.</button>
             </section>
+
+
+            <!--Владения-->
+
+
             <p class="lead3">Владения</p>
             <section class="sec_row4">
               <select class="form-select f-s-n" size="3" aria-label="size 3 select example"></select>
               <div class="form-floating f-f-n">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea5" style="height: 100px; border: 1px solid rgb(92, 139, 215); resize: none; "></textarea>
+                <textarea class="form-control" readonly placeholder="Leave a comment here" id="floatingTextarea5" style="height: 100px; border: 1px solid rgb(92, 139, 215); resize: none; "></textarea>
                 <label for="floatingTextarea5">Описание</label>
               </div>
             </section>
@@ -88,6 +123,11 @@
             </section>
         </div>
     </div>
+
+
+    <!--Дерево компетенций-->
+
+
     <div class="high_div4">
         <p class="lead3" align="center">Дерево компетенций</p>
         <div class="tree" onclick="tree_toggle(arguments[0])">
@@ -95,37 +135,42 @@
         </div>
     </div>
 
+
 <!--ModalForPush-->
 
-    <form method="post">
-      <div class="modal fade" id="ModalPush" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Добавить</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
 
-                      <div class="mb-3">
-                          <div class="row_divs" style="margin-bottom:20px;">
-                            <label for="cod-text" class="col-form-label">Код:</label>
-                            <input type="text" id="cod-text" class="form-control" style="width: 200px; margin-left:10px;" >
-                          </div>
+<form method="post">
+    {% csrf_token %}
+    <div class="modal fade" id="ModalPush" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Добавить</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <div class="row_divs" style="margin-bottom:20px;">
+                        <label for="cod-text" class="col-form-label">Код:</label>
+                        <input type="text" id="cod-text" class="form-control" style="width: 200px; margin-left:10px;" >
+                        </div>
 
-                          <textarea class="form-control" name="textOfPush" id="descrip-text" placeholder="Описание"></textarea>
-                      </div>
+                        <textarea class="form-control" name="textOfPush" id="descrip-text" placeholder="Описание"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Назад</button>
+                    <button type="submit" name="add_saveButton" class="btn btn-primary" style="width:100px;">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Назад</button>
-                      <button type="submit" name="add_saveButton" class="btn btn-primary" style="width:100px;">Сохранить</button>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </form>
+
 <!--ModalForChange-->
+
+
 <form method="post">
   <div class="modal fade" id="ModalChange" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -135,7 +180,6 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-
                   <div class="mb-3">
                       <div class="row_divs" style="margin-bottom:20px;">
                         <label for="cod-text-change" class="col-form-label">Код:</label>
@@ -144,7 +188,6 @@
 
                       <textarea class="form-control" name="textOfChange" id="descrip-text-change" placeholder="Описание"></textarea>
                   </div>
-
               </div>
               <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Назад</button>
@@ -154,6 +197,6 @@
       </div>
   </div>
 </form>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
