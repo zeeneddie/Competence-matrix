@@ -1,5 +1,5 @@
 # :bookmark_tabs: Матрица компетенций
-![image](https://user-images.githubusercontent.com/86602542/177333038-970a860c-6b67-43d8-b7a0-6f376a369578.png)
+![image](https://user-images.githubusercontent.com/86602542/177342315-972fc54a-dd9b-499d-b0bf-04c9ff887a84.png)
 ## :pencil2: Постановка задачи:
 Разработать веб-приложение для формирования матрицы компетенций
 ## :pencil: Возможности веб-приложения:
