@@ -111,14 +111,19 @@ body{
     flex-direction:column;
     border: 3px double rgb(220, 94, 172);   
     border-radius: 50% 20% / 10% 40%;
-    width: 600px;
+    width: 1200px;
     height:650px;
     background-color:white;
     margin-left:10px;
     margin-bottom:30px;
     margin-top:30px;
-
-
+}
+.tree{
+    overflow-y: scroll;
+    height: 500px;
+    width: 1100px;
+    padding-left: 50px;
+    padding-right: 10px;
 }
 .row_divs{
     display:flex;
@@ -259,11 +264,4 @@ option{
 }
 .btn2-outline-primary:focus {
     box-shadow: 0 0 0 0.25rem rgb(220 94 172 / 50%);
-}
-.tree{
-    overflow-y: scroll;
-    height: 500px;
-    width: 500px;
-    padding-left: 50px;
-    padding-right: 100px;
 }

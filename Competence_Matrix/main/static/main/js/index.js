@@ -15,3 +15,24 @@ function tree_toggle(event) {
 function hasClass(elem, className) {
 	return new RegExp("(^|\\s)"+className+"(\\s|$)").test(elem.className)
 }
+/////////////////////////////////////
+// Обновить куки текущего типа модели
+/////////////////////////////////////
+function UpdateCookieModel(modelName, modelType){
+	document.cookie = "model"+modelType+"=" + modelName 
+}
+/////////////////////////////////
+// Изменить данные текущей модели
+/////////////////////////////////
+function changeModel(modelType){
+	let array = document.cookie.split(';');
+	for(let i = 0; i < array.length; i++){
+		let char = array[i];
+		while(char.charAt(0) == ' '){
+			char = char.substring(1);
+		}
+		if(char.indexOf("model"+modelType+"=") == 0){
+			alert(char.substring("model"+modelType+"=".length, char.length))
+		}
+	}
+}
