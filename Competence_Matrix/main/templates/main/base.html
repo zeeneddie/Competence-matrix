@@ -25,8 +25,7 @@
                                 {% block competenceList %} {% endblock %}
                             </select>
                             <div class="form-floating">
-                                <textarea readonly class="form-control" placeholder="Leave a comment here" id="floatingTextarea1" style="height: 300px; border: 1px solid rgb(92, 139, 215); resize: none; ">{% block competenceInfo %}{% endblock %}</textarea>
-                                <label for="floatingTextarea1">Описание</label>
+                                <textarea readonly class="form-control"  id="floatingTextarea1" style="padding: 5px; height: 300px; border: 1px solid rgb(92, 139, 215); resize: none; ">{% block competenceInfo %}{% endblock %}</textarea>
                             </div>
                         </section>
                         <section class="sec_row2">
@@ -48,8 +47,7 @@
                                 {% block indicatorList %} {% endblock %}
                             </select>
                             <div class="form-floating">
-                                <textarea readonly class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 300px; border: 1px solid rgb(92, 139, 215); resize: none; ">{% block indicatorInfo %}{% endblock %}</textarea>
-                                <label for="floatingTextarea2">Описание</label>
+                                <textarea readonly class="form-control" id="floatingTextarea2" style="padding: 5px; height: 300px; border: 1px solid rgb(92, 139, 215); resize: none; ">{% block indicatorInfo %}{% endblock %}</textarea>
                             </div>
                         </section>
                     </form>
@@ -70,10 +68,11 @@
             <form action="{% url 'modelInfo' %}" method="post">
                 {% csrf_token %}
                 <section class="sec_row4">
-                    <select class="form-select f-s-n" size="3" aria-label="size 3 select example">     </select>
+                    <select onchange="this.form.submit()" class="form-select f-s-n" size="3" aria-label="size 3 select example">    
+                        {% block knowledgeList %} {% endblock %}
+                    </select>
                     <div class="form-floating f-f-n">
-                        <textarea readonly class="form-control" placeholder="Leave a comment here" id="floatingTextarea3" style="height: 100px; border: 1px solid rgb(92, 139, 215); resize: none; "></textarea>
-                        <label for="floatingTextarea3">Описание</label>
+                        <textarea readonly class="form-control" id="floatingTextarea3" style="padding: 5px; height: 100px; border: 1px solid rgb(92, 139, 215); resize: none; ">{% block knowledgeInfo %}{% endblock %}</textarea>
                     </div>
                 </section>
             </form> 
@@ -89,10 +88,11 @@
             <form action="{% url 'modelInfo' %}" method="post">
                 {% csrf_token %}
                 <section class="sec_row4">
-                    <select class="form-select f-s-n" size="3" aria-label="size 3 select example"></select>
+                    <select onchange="this.form.submit()" class="form-select f-s-n" size="3" aria-label="size 3 select example">
+                        {% block skillsList %} {% endblock %}
+                    </select>
                     <div class="form-floating f-f-n">
-                        <textarea readonly class="form-control" placeholder="Leave a comment here" id="floatingTextarea4" style="height: 100px; border: 1px solid rgb(92, 139, 215); resize: none; "></textarea>
-                        <label for="floatingTextarea4">Описание</label>
+                        <textarea readonly class="form-control" id="floatingTextarea4" style="padding: 5px; height: 100px; border: 1px solid rgb(92, 139, 215); resize: none; ">{% block skillInfo %}{% endblock %}</textarea>
                     </div>
                 </section>
             </form>
@@ -108,11 +108,12 @@
             <form action="{% url 'modelInfo' %}" method="post">
                 {% csrf_token %}
                 <section class="sec_row4">
-                <select class="form-select f-s-n" size="3" aria-label="size 3 select example"></select>
-                <div class="form-floating f-f-n">
-                    <textarea class="form-control" readonly placeholder="Leave a comment here" id="floatingTextarea5" style="height: 100px; border: 1px solid rgb(92, 139, 215); resize: none; "></textarea>
-                    <label for="floatingTextarea5">Описание</label>
-                </div>
+                    <select onchange="this.form.submit()" class="form-select f-s-n" size="3" aria-label="size 3 select example">
+                        {% block possessionList %} {% endblock %}
+                    </select>
+                    <div class="form-floating f-f-n">
+                        <textarea class="form-control" readonly  id="floatingTextarea5" style="padding: 5px; height: 100px; border: 1px solid rgb(92, 139, 215); resize: none; ">{% block possessionInfo %}{% endblock %}</textarea>
+                    </div>
                 </section>
             </form>
             <section class="sec_row3">
@@ -131,6 +132,13 @@
             {% block tree %} {% endblock %}
         </div>
     </div>
+
+<footer class="footer">
+    <div align="center" class="container-sm text-bg-light p-3">
+        <p>© Кузьмин Дмитрий, Кирилл Хрявин, 2022г</p>
+        <p>Code: github.com/TovDmitrij/Competence-matrix</p>
+    </div>
+</footer>
 
 <!--ModalForPush-->
 
@@ -178,7 +186,7 @@
                             <label for="cod-text-change" class="col-form-label">Код:</label>
                             <textarea readonly id="modelName_Change" class="form-control" placeholder="Leave a comment here" style="height: 30px; margin-left: 5px; border: 1px solid rgb(92, 139, 215); resize: none; "></textarea>
                         </div>
-                        <textarea id="modelDescription" class="form-control" name="textOfChange" id="descrip-text-change" placeholder="Описание"></textarea>
+                        <textarea id="modelDescription_Change" class="form-control" name="textOfChange" id="descrip-text-change" placeholder="Описание"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

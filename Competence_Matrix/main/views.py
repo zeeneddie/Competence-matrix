@@ -1,38 +1,104 @@
-from django.shortcuts import render
-from .json import loadJSON
-from .modelTree import FillModelTree, CreateTree, CLR, selectList
+from textwrap import indent
+from django.shortcuts import redirect, render
+from .json import loadJSON, saveJSON
+from .modelTree import FillModelTree, CreateTree, CLR_ModelFind, SelectList, ModelInfo, CLR_ModelUpdate, FillJSONDictionary
 from .enum import ModelType
+from .models import Model
 
 def index(request):
     data = loadJSON()
-    modelTree = FillModelTree(data)
+    modelTree = []
+    modelTree.append(Model(None, None, None, FillModelTree(data)))
     return render(
         request, 
         'main/index.html', 
         {
-            'tree': "<ul class = 'Container'>" + CreateTree(modelTree) + "</ul>", 
-            'competenceList': selectList(modelTree, ModelType.Competence)
+            'tree': "<ul class = 'Container'>" + CreateTree(modelTree[0]) + "</ul>", 
+            'competenceList': SelectList(modelTree[0], ModelType.Competence)
         }
     )
 def modelInfo(request):
     data = loadJSON()
-    modelTree = FillModelTree(data)
-    currentCompetence = CLR(modelTree[0], request.COOKIES.get('modelCompetence'))
-    currentIndicator = CLR(modelTree[0], request.COOKIES.get('modelIndicator'))
-    currentKnowledge = CLR(modelTree[0], request.COOKIES.get('modelKnowledge'))
-    currentSkill = CLR(modelTree[0], request.COOKIES.get('modelSkill'))
-    currentPossession = CLR(modelTree[0], request.COOKIES.get('modelPossession'))
-    return render(request, 'main/index.html', 
-    {
-        'tree': "<ul class = 'Container'>" + CreateTree(modelTree) + "</ul>", 
-        'competenceList': selectList(modelTree, ModelType.Competence),
-        'competenceInfo': currentCompetence.description,
-        'indicatorList': selectList(currentCompetence.children, ModelType.Indicator),
-        'indicatorInfo': currentIndicator.description,
-        'knowledgeList': selectList(currentIndicator.children, ModelType.Knowledge),
-        'knowledgeInfo': currentKnowledge.description,
-        'skillList': selectList(currentIndicator.children, ModelType.Skill),
-        'skillInfo': currentSkill.description,
-        'possessionList': selectList(currentIndicator.children, ModelType.Possession),
-        'possessionInfo': currentPossession.description
-    })
+    modelTree = []
+    modelTree.append(Model(None, None, None, FillModelTree(data)))
+    currentCompetence = CLR_ModelFind(modelTree[0], request.COOKIES.get('modelCompetence'))
+    currentIndicator = CLR_ModelFind(modelTree[0], request.COOKIES.get('modelIndicator'))
+    currentKnowledge = CLR_ModelFind(modelTree[0], request.COOKIES.get('modelKnowledge'))
+    currentSkill = CLR_ModelFind(modelTree[0], request.COOKIES.get('modelSkill'))
+    currentPossession = CLR_ModelFind(modelTree[0], request.COOKIES.get('modelPossession'))
+    match request.COOKIES.get('currentModelType'):
+        case 'Competence':
+            return render(request, 'main/index.html', 
+            {
+                'tree': "<ul class = 'Container'>" + CreateTree(modelTree[0]) + "</ul>", 
+                'competenceList': SelectList(modelTree[0], ModelType.Competence),
+                'competenceInfo': ModelInfo(currentCompetence.description),
+                'indicatorList': SelectList(currentCompetence, ModelType.Indicator)
+            })
+        case 'Indicator':
+            return render(request, 'main/index.html', 
+            {
+                'tree': "<ul class = 'Container'>" + CreateTree(modelTree[0]) + "</ul>", 
+                'competenceList': SelectList(modelTree[0], ModelType.Competence),
+                'competenceInfo': ModelInfo(currentCompetence.description),
+                'indicatorList': SelectList(currentCompetence, ModelType.Indicator),
+                'indicatorInfo': ModelInfo(currentIndicator.description),
+                'knowledgeList': SelectList(currentIndicator, ModelType.Knowledge),
+                'skillsList': SelectList(currentIndicator, ModelType.Skill),
+                'possessionList': SelectList(currentIndicator, ModelType.Possession)
+            })
+        case 'Knowledge':
+            return render(request, 'main/index.html', 
+            {
+                'tree': "<ul class = 'Container'>" + CreateTree(modelTree[0]) + "</ul>", 
+                'competenceList': SelectList(modelTree[0], ModelType.Competence),
+                'competenceInfo': ModelInfo(currentCompetence.description),
+                'indicatorList': SelectList(currentCompetence, ModelType.Indicator),
+                'indicatorInfo': ModelInfo(currentIndicator.description),
+                'knowledgeList': SelectList(currentIndicator, ModelType.Knowledge),
+                'knowledgeInfo': ModelInfo(currentKnowledge.description),
+                'skillsList': SelectList(currentIndicator, ModelType.Skill),
+                'possessionList': SelectList(currentIndicator, ModelType.Possession)
+            })
+        case 'Skill':
+            return render(request, 'main/index.html', 
+            {
+                'tree': "<ul class = 'Container'>" + CreateTree(modelTree[0]) + "</ul>", 
+                'competenceList': SelectList(modelTree[0], ModelType.Competence),
+                'competenceInfo': ModelInfo(currentCompetence.description),
+                'indicatorList': SelectList(currentCompetence, ModelType.Indicator),
+                'indicatorInfo': ModelInfo(currentIndicator.description),
+                'knowledgeList': SelectList(currentIndicator, ModelType.Knowledge),
+                'skillsList': SelectList(currentIndicator, ModelType.Skill),
+                'skillInfo': ModelInfo(currentSkill.description),
+                'possessionList': SelectList(currentIndicator, ModelType.Possession)
+            })
+        case 'Possession':
+            return render(request, 'main/index.html', 
+            {
+                'tree': "<ul class = 'Container'>" + CreateTree(modelTree[0]) + "</ul>", 
+                'competenceList': SelectList(modelTree[0], ModelType.Competence),
+                'competenceInfo': ModelInfo(currentCompetence.description),
+                'indicatorList': SelectList(currentCompetence, ModelType.Indicator),
+                'indicatorInfo': ModelInfo(currentIndicator.description),
+                'knowledgeList': SelectList(currentIndicator, ModelType.Knowledge),
+                'skillsList': SelectList(currentIndicator, ModelType.Skill),
+                'possessionList': SelectList(currentIndicator, ModelType.Possession),
+                'possessionInfo': ModelInfo(currentPossession.description)
+            })
+def modelAdd(request):
+    return None
+def modelChange(request):
+    data = loadJSON()
+    modelTree = []
+    modelTree.append(Model(None, None, None, FillModelTree(data)))
+    modelName = request.COOKIES.get('modelName')
+    modelDescription = request.COOKIES.get('modelDescription')
+    modelTree = CLR_ModelUpdate(modelTree[0], modelTree, modelName, modelDescription)[0][0]
+    modelDict = {
+        "children": FillJSONDictionary(modelTree)
+    }
+    saveJSON(modelDict)
+    return redirect('modelInfo')
+def modelDel(request):
+    return None

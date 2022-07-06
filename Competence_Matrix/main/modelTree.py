@@ -1,3 +1,4 @@
+from pyexpat import model
 from .models import Model
 from .enum import ModelType
 
@@ -12,25 +13,53 @@ def FillModelTree(data):
     except:
         return None
     return tmp
-#--------------------
-# Прямой обход дерева
-#--------------------
-def CLR(subroot, key):
-    if subroot.children == None or subroot.name == key:
-        return subroot
-    for currentModel in subroot.children:
-        return CLR(currentModel, key)
-    """
-    if subroot.children != None:
-        if key != subroot.name:
-                for currentModel in subroot.children:
-                    CLR(currentModel, key)
-                return None
+#--------------------------------------------------
+# Преобразование данных из дерева типа Model в JSON
+#--------------------------------------------------
+def FillJSONDictionary(data):
+    childrenList = []
+    for currentModel in data.children:
+        children = {
+            "name": currentModel.name,
+            "description": currentModel.description,
+            "type": currentModel.type.name,
+            "children": FillJSONDictionary(currentModel) if currentModel.children != None else None
+        }
+        childrenList.append(children)
+    return childrenList
+#--------------------------------------
+# Прямой обход дерева (нахождение узла)
+#--------------------------------------
+def CLR_ModelFind(subroot, key):
+    if subroot.name != key:
+        if subroot.children != None:
+            model = Model(None,None,None,None)
+            for currentModel in subroot.children:
+                result = CLR_ModelFind(currentModel, key)
+                if result != None:
+                    if result.name == key:
+                        return result
+            return model
         else:
-            return subroot
+            return None
     else:
-        return None
-    """
+        return subroot
+#---------------------------------------
+# Прямой обход дерева (обновление модели)
+#---------------------------------------
+def CLR_ModelUpdate(subroot, currentModelList, key, value):
+    modelList = []
+    if currentModelList is None:
+        currentModelList = []
+    currentModelList.append(subroot)
+    if subroot.children:
+        for currentModel in subroot.children:
+            if currentModel.name == key:
+                currentModel.description = value
+            modelList.extend(CLR_ModelUpdate(currentModel, currentModelList[:], key, value))
+    else:
+        modelList.append(currentModelList)
+    return modelList
 #------------------------------
 # Обновить данные модели дерева
 #------------------------------
@@ -46,44 +75,6 @@ def AddModel(dataList, dataModel):
 #-------------------------     
 def DeleteModel(dataList, dataModel):
     return None
-#-----------------------------
-# Генерация дерева компетенций
-#-----------------------------
-def CreateTree(data):
-    result = ""
-    for currentModel in data:
-        liClass = ""
-        if currentModel.children == None:
-            liClass = "Leaf"
-        else:
-            liClass = "Closed"
-        if currentModel == data[-1]:
-            liClass += " IsLast"
-        color = ""
-        match currentModel.type:
-            case ModelType.Competence:
-                color = "#FFF8DC"
-            case ModelType.Indicator:
-                color = "#FFDEAD"
-            case _:
-                color = "#FFEBCD"
-        result += """
-            <li class = 'Node Expand""" + liClass + """'>
-                <div class = 'Expand'></div>
-                <div class = 'Content' style='background-color:""" + color + """;'>""" + currentModel.name + """</div>
-                <div class = 'Content'>""" + currentModel.description + """</div>"""
-        if currentModel.children != None:
-            result += "<ul class = 'Container'>" + CreateTree(currentModel.children) + "</ul>"
-        result += "</li>"
-    return result
-#------------------------------
-# Список моделей modelType типа
-#------------------------------
-def selectList(data, modelType):
-    result = ""
-    for currentModel in data:
-        result += "<option onclick='UpdateCookieModel(value, id)' id = '" + modelType.name + "' value = '" + currentModel.name + "'>" + currentModel.name + "</option>"
-    return result
 #----------------------
 # Получение типа модели
 #----------------------
@@ -99,3 +90,47 @@ def GetModelType(currentModelType):
             return ModelType.Skill
         case "Possession":
             return ModelType.Possession  
+#-----------------------------
+# Генерация дерева компетенций
+#-----------------------------
+def CreateTree(data):
+    result = ""
+    for currentModel in data.children:
+        liClass = ""
+        if currentModel.children == None:
+            liClass = "Leaf"
+        else:
+            liClass = "Closed"
+        if currentModel == data.children[-1]:
+            liClass += " IsLast"
+        color = ""
+        match currentModel.type:
+            case ModelType.Competence:
+                color = "#FFF8DC"
+            case ModelType.Indicator:
+                color = "#FFDEAD"
+            case _:
+                color = "#FFEBCD"
+        result += """
+            <li class = 'Node Expand""" + liClass + """'>
+                <div class = 'Expand'></div>
+                <div class = 'Content' style='background-color:""" + color + """;'>""" + currentModel.name + """</div>
+                <div class = 'Content'>""" + currentModel.description + """</div>"""
+        if currentModel.children != None:
+            result += "<ul class = 'Container'>" + CreateTree(currentModel) + "</ul>"
+        result += "</li>"
+    return result
+#------------------------------
+# Список моделей modelType типа
+#------------------------------
+def SelectList(data, modelType):
+    result = ""
+    for currentModel in data.children:
+        if currentModel.type == modelType:
+            result += "<option onclick='UpdateCookieModel(value, id)' id = '" + modelType.name + "' value = '" + currentModel.name + "'>" + currentModel.name + "</option>"
+    return result
+#---------------------------
+# Возвращает описание модели
+#---------------------------
+def ModelInfo(model):
+    return "" if model == None else model

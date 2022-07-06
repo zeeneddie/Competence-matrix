@@ -17,6 +17,7 @@ function hasClass(elem, className) {
 }
 function UpdateCookieModel(modelName, modelType){
 	document.cookie = "model"+modelType+"=" + modelName;
+	document.cookie = "currentModelType="+modelType;
 }
 function ChangeModalWindow(modelType){
 	let array = document.cookie.split(';');
@@ -37,6 +38,6 @@ function AddModalWindow(modelType){
 	document.cookie = "currentModelType="+modelType;
 }
 function SaveModelInfo(){
-	document.cookie = "modelName="+document.getElementById().innerHTML;
-	document.cookie = "modelDescription="+document.getElementById().innerHTML;
+	document.cookie = "modelName="+document.getElementById("modelName_Change").innerHTML;
+	document.cookie = "modelDescription="+document.getElementById("modelDescription_Change").value;
 }
