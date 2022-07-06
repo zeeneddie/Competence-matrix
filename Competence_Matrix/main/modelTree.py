@@ -8,17 +8,20 @@ def FillModelTree(data):
     tmp = []
     for currentModel in data["children"]:
         modelType = None
-        match currentModel["name"][0]:
-            case 'З':
-                modelType = ModelType.Knowledge
-            case 'У':
-                modelType = ModelType.Skill
-            case 'В':
-                modelType = ModelType.Possession
-            case 'И':
-                modelType = ModelType.Indicator
-            case _:
-                modelType = ModelType.Competence
+        if "children" in currentModel: 
+            match currentModel["name"][0]:
+                case 'И':
+                    modelType = ModelType.Indicator
+                case _:
+                    modelType = ModelType.Competence
+        else:
+            match currentModel["name"][0]:
+                case 'З':
+                    modelType = ModelType.Knowledge
+                case 'У':
+                    modelType = ModelType.Skill
+                case 'В':
+                    modelType = ModelType.Possession  
         tmp.append(Model(currentModel["name"], modelType ,  currentModel["description"], FillModelTree(currentModel) if "children" in currentModel else None))
     return tmp
 #--------------------
@@ -68,11 +71,19 @@ def CreateTree(data):
             liClass = "Closed"
         if currentModel == data[-1]:
             liClass += " IsLast"
+        color = ""
+        match currentModel.type:
+            case ModelType.Competence:
+                color = "#FFF8DC"
+            case ModelType.Indicator:
+                color = "#FFDEAD"
+            case _:
+                color = "#FFEBCD"
         result += """
-        <li class = 'Node Expand""" + liClass + """'>
-            <div class = 'Expand'></div>
-            <div class = 'Content' style='background-color:#FFFFE0;'>""" + currentModel.name + """</div>
-            <div class = 'Content'>""" + currentModel.description + """</div>"""
+            <li class = 'Node Expand""" + liClass + """'>
+                <div class = 'Expand'></div>
+                <div class = 'Content' style='background-color:""" + color + """;'>""" + currentModel.name + """</div>
+                <div class = 'Content'>""" + currentModel.description + """</div>"""
         if currentModel.children != None:
             result += "<ul class = 'Container'>" + CreateTree(currentModel.children) + "</ul>"
         result += "</li>"
