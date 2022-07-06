@@ -6,23 +6,27 @@ from .enum import ModelType
 #--------------------------------------------------
 def FillModelTree(data):
     tmp = []
-    for currentModel in data["children"]:
-        modelType = None
-        if "children" in currentModel: 
-            match currentModel["name"][0]:
-                case 'И':
-                    modelType = ModelType.Indicator
-                case _:
+    try:
+        for currentModel in data["children"]:
+            modelType = None
+            match currentModel["type"]:
+                case "Competence":
                     modelType = ModelType.Competence
-        else:
-            match currentModel["name"][0]:
-                case 'З':
+                case "Indicator":
+                    modelType = ModelType.Indicator
+                case "Knowledge":
                     modelType = ModelType.Knowledge
-                case 'У':
+                case "Skill":
                     modelType = ModelType.Skill
-                case 'В':
+                case "Possession":
                     modelType = ModelType.Possession  
-        tmp.append(Model(currentModel["name"], modelType ,  currentModel["description"], FillModelTree(currentModel) if "children" in currentModel else None))
+            tmp.append(Model(
+                currentModel["name"], 
+                modelType, 
+                currentModel["description"], 
+                FillModelTree(currentModel) if "children" in currentModel else None))
+    except:
+        return None
     return tmp
 #--------------------
 # Прямой обход дерева
