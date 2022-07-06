@@ -16,9 +16,9 @@ function hasClass(elem, className) {
 	return new RegExp("(^|\\s)"+className+"(\\s|$)").test(elem.className)
 }
 function UpdateCookieModel(modelName, modelType){
-	document.cookie = "model"+modelType+"=" + modelName 
+	document.cookie = "model"+modelType+"=" + modelName;
 }
-function changeModel(modelType){
+function ChangeModalWindow(modelType){
 	let array = document.cookie.split(';');
 	for(let i = 0; i < array.length; i++){
 		let char = array[i];
@@ -26,10 +26,17 @@ function changeModel(modelType){
 			char = char.substring(1);
 		}
 		if(char.indexOf("model"+modelType+"=") == 0){
-			document.getElementById("modelName_Change").innerHTML = char.slice(("model"+modelType+"=").length)
+			document.getElementById("modelName_Change").innerHTML = char.slice(("model"+modelType+"=").length);
+		}
+		else{
+			document.getElementById("modelName_Change").innerHTML = "";
 		}
 	}
 }
-function addModel(modelType){
-	document.cookie = "currentModelType="+modelType
+function AddModalWindow(modelType){
+	document.cookie = "currentModelType="+modelType;
+}
+function SaveModelInfo(){
+	document.cookie = "modelName="+document.getElementById().innerHTML;
+	document.cookie = "modelDescription="+document.getElementById().innerHTML;
 }

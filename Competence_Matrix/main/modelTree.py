@@ -8,23 +8,7 @@ def FillModelTree(data):
     tmp = []
     try:
         for currentModel in data["children"]:
-            modelType = None
-            match currentModel["type"]:
-                case "Competence":
-                    modelType = ModelType.Competence
-                case "Indicator":
-                    modelType = ModelType.Indicator
-                case "Knowledge":
-                    modelType = ModelType.Knowledge
-                case "Skill":
-                    modelType = ModelType.Skill
-                case "Possession":
-                    modelType = ModelType.Possession  
-            tmp.append(Model(
-                currentModel["name"], 
-                modelType, 
-                currentModel["description"], 
-                FillModelTree(currentModel) if "children" in currentModel else None))
+            tmp.append(Model(currentModel["name"], GetModelType(currentModel["type"]), currentModel["description"], FillModelTree(currentModel) if "children" in currentModel else None))
     except:
         return None
     return tmp
@@ -100,3 +84,18 @@ def selectList(data, modelType):
     for currentModel in data:
         result += "<option onclick='UpdateCookieModel(value, id)' id = '" + modelType.name + "' value = '" + currentModel.name + "'>" + currentModel.name + "</option>"
     return result
+#----------------------
+# Получение типа модели
+#----------------------
+def GetModelType(currentModelType):
+    match currentModelType:
+        case "Competence":
+            return ModelType.Competence
+        case "Indicator":
+            return ModelType.Indicator
+        case "Knowledge":
+            return ModelType.Knowledge
+        case "Skill":
+            return ModelType.Skill
+        case "Possession":
+            return ModelType.Possession  
