@@ -7,7 +7,7 @@ from . import modelTree
 #------------------
 # Основная страница
 #------------------
-def index(request):
+def Index(request):
     data = loadJSON()
     tree = []
     tree.append(Model(None, None, None, modelTree.FillModelTree(data)))
@@ -22,15 +22,15 @@ def index(request):
 #---------------------------
 # Вывод информации о моделях
 #---------------------------
-def modelInfo(request):
+def ShowModelsInfo(request):
     data = loadJSON()
     tree = []
     tree.append(Model(None, None, None, modelTree.FillModelTree(data)))
-    currentCompetence = modelTree.CLR_ModelFind(tree[0], request.COOKIES.get('modelCompetence'))
-    currentIndicator = modelTree.CLR_ModelFind(tree[0], request.COOKIES.get('modelIndicator'))
-    currentKnowledge = modelTree.CLR_ModelFind(tree[0], request.COOKIES.get('modelKnowledge'))
-    currentSkill = modelTree.CLR_ModelFind(tree[0], request.COOKIES.get('modelSkill'))
-    currentPossession = modelTree.CLR_ModelFind(tree[0], request.COOKIES.get('modelPossession'))
+    currentCompetence = modelTree.ModelFind(tree[0], request.COOKIES.get('modelCompetence'))
+    currentIndicator = modelTree.ModelFind(tree[0], request.COOKIES.get('modelIndicator'))
+    currentKnowledge = modelTree.ModelFind(tree[0], request.COOKIES.get('modelKnowledge'))
+    currentSkill = modelTree.ModelFind(tree[0], request.COOKIES.get('modelSkill'))
+    currentPossession = modelTree.ModelFind(tree[0], request.COOKIES.get('modelPossession'))
     match request.COOKIES.get('currentModelType'):
         case 'Competence':
             return render(request, 'main/index.html', 
@@ -70,7 +70,7 @@ def modelInfo(request):
 #----------------
 # Добавить модель
 #----------------
-def modelAdd(request):
+def AddModel(request):
     data = loadJSON()
     tree = []
     tree.append(Model(None, None, None, modelTree.FillModelTree(data)))
@@ -90,7 +90,7 @@ def modelAdd(request):
             key = request.COOKIES.get("modelCompetence")
         case _:
             key = request.COOKIES.get("modelIndicator")
-    tree = modelTree.CLR_ModelAdd(tree[0], tree, key , modelName, modelDescription, modelType)[0][0]
+    tree = modelTree.ModelAdd(tree[0], tree, key , modelName, modelDescription, modelType)[0][0]
     modelDict = {
         "children": modelTree.FillJSONDictionary(tree)
     }
@@ -99,13 +99,13 @@ def modelAdd(request):
 #-------------------------
 # Изменить описание модели
 #-------------------------
-def modelChange(request):
+def ChangeModel(request):
     data = loadJSON()
     tree = []
     tree.append(Model(None, None, None, modelTree.FillModelTree(data)))
     modelName = request.COOKIES.get("model" + request.COOKIES.get("currentModelType"))
     modelDescription = request.COOKIES.get('modelDescription')
-    tree = modelTree.CLR_ModelUpdate(tree[0], tree, modelName, modelDescription)[0][0]
+    tree = modelTree.ModelUpdate(tree[0], tree, modelName, modelDescription)[0][0]
     modelDict = {
         "children": modelTree.FillJSONDictionary(tree)
     }
@@ -114,12 +114,12 @@ def modelChange(request):
 #-------------------------
 # Удалить модель
 #-------------------------
-def modelDelete(request):
+def DeleteModel(request):
     data = loadJSON()
     tree = []
     tree.append(Model(None, None, None, modelTree.FillModelTree(data)))
     modelName = request.COOKIES.get("model" + request.COOKIES.get("currentModelType"))
-    tree = modelTree.CLR_ModelDelete(tree[0], tree, modelName)[0][0]
+    tree = modelTree.ModelDelete(tree[0], tree, modelName)[0][0]
     modelDict = {
         "children": modelTree.FillJSONDictionary(tree)
     }

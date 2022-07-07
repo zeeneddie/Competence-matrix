@@ -38,12 +38,12 @@ def Contains(root, key):
 #--------------------------------------
 # Прямой обход дерева (нахождение узла)
 #--------------------------------------
-def CLR_ModelFind(subroot, key):
+def ModelFind(subroot, key):
     if subroot.name != key:
         if subroot.children != None:
             model = Model(None,None,None,None)
             for currentModel in subroot.children:
-                result = CLR_ModelFind(currentModel, key)
+                result = ModelFind(currentModel, key)
                 if result != None:
                     if result.name == key:
                         return result
@@ -55,7 +55,7 @@ def CLR_ModelFind(subroot, key):
 #---------------------------------------
 # Прямой обход дерева (обновление модели)
 #---------------------------------------
-def CLR_ModelUpdate(subroot, currentModelList, key, value):
+def ModelUpdate(subroot, currentModelList, key, value):
     modelList = []
     if currentModelList is None:
         currentModelList = []
@@ -64,14 +64,14 @@ def CLR_ModelUpdate(subroot, currentModelList, key, value):
         for currentModel in subroot.children:
             if currentModel.name == key:
                 currentModel.description = value
-            modelList.extend(CLR_ModelUpdate(currentModel, currentModelList[:], key, value))
+            modelList.extend(ModelUpdate(currentModel, currentModelList[:], key, value))
     else:
         modelList.append(currentModelList)
     return modelList
 #---------------------------------------
 # Прямой обход дерева (удаление модели)
 #---------------------------------------
-def CLR_ModelDelete(subroot, currentModelList, key):
+def ModelDelete(subroot, currentModelList, key):
     modelList = []
     if currentModelList is None:
         currentModelList = []
@@ -80,14 +80,14 @@ def CLR_ModelDelete(subroot, currentModelList, key):
         for currentModel in subroot.children:
             if currentModel.name == key:
                 subroot.children.remove(currentModel)
-            modelList.extend(CLR_ModelDelete(currentModel, currentModelList[:], key))
+            modelList.extend(ModelDelete(currentModel, currentModelList[:], key))
     else:
         modelList.append(currentModelList)
     return modelList
 #---------------------------------------
 # Прямой обход дерева (добавление модели)
 #---------------------------------------
-def CLR_ModelAdd(subroot, currentModelList, key, modelName, modelDescription, modelType):
+def ModelAdd(subroot, currentModelList, key, modelName, modelDescription, modelType):
     modelList = []
     if currentModelList is None:
         currentModelList = []
@@ -99,7 +99,7 @@ def CLR_ModelAdd(subroot, currentModelList, key, modelName, modelDescription, mo
                     currentModel.children = []
                 currentModel.children.append(Model(modelName, modelType, modelDescription, None))
                 continue
-            modelList.extend(CLR_ModelAdd(currentModel, currentModelList[:], key, modelName, modelDescription, modelType))
+            modelList.extend(ModelAdd(currentModel, currentModelList[:], key, modelName, modelDescription, modelType))
     else:
         modelList.append(currentModelList)
     return modelList

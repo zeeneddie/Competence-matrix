@@ -42,5 +42,4 @@ function SaveModelInfo(){
 	document.cookie = "modelDescription="+document.getElementById("modelDescription_Change").value;
 	document.cookie = "modelNameAdd="+ document.getElementById("modelName_Add").value;
 	document.cookie = "modelDescriptionAdd="+document.getElementById("modelDescription_Add").value;
-
 }
