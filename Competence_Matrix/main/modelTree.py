@@ -9,7 +9,7 @@ def FillModelTree(data):
     tmp = []
     try:
         for currentModel in data["children"]:
-            tmp.append(Model(currentModel["name"], GetModelType(currentModel["type"]), currentModel["description"], FillModelTree(currentModel) if "children" in currentModel else None))
+            tmp.append(Model(currentModel["name"], GetModelType(currentModel["type"]), currentModel["description"].strip(), FillModelTree(currentModel) if "children" in currentModel else None))
     except:
         return None
     return tmp
@@ -27,6 +27,14 @@ def FillJSONDictionary(data):
         }
         childrenList.append(children)
     return childrenList
+#---------------------
+# Содержится ли модель
+#---------------------
+def Contains(root, key):
+    for model in root.children:
+        if model.name == key:
+            return True
+    return False
 #--------------------------------------
 # Прямой обход дерева (нахождение узла)
 #--------------------------------------
@@ -60,21 +68,22 @@ def CLR_ModelUpdate(subroot, currentModelList, key, value):
     else:
         modelList.append(currentModelList)
     return modelList
-#------------------------------
-# Обновить данные модели дерева
-#------------------------------
-def UpdateModel(dataList, dataModel):
-    return None
-#-------------------------
-# Добавить модель в дерево
-#-------------------------     
-def AddModel(dataList, dataModel):
-    return None
-#-------------------------
-# Удалить модель из дерева
-#-------------------------     
-def DeleteModel(dataList, dataModel):
-    return None
+#---------------------------------------
+# Прямой обход дерева (удаление модели)
+#---------------------------------------
+def CLR_ModelDelete(subroot, currentModelList, key):
+    modelList = []
+    if currentModelList is None:
+        currentModelList = []
+    currentModelList.append(subroot)
+    if subroot.children:
+        for currentModel in subroot.children:
+            if currentModel.name == key:
+                continue
+            modelList.extend(CLR_ModelDelete(currentModel, currentModelList[:], key))
+    else:
+        modelList.append(currentModelList)
+    return modelList
 #----------------------
 # Получение типа модели
 #----------------------
@@ -123,11 +132,14 @@ def CreateTree(data):
 #------------------------------
 # Список моделей modelType типа
 #------------------------------
-def SelectList(data, modelType):
+def SelectList(data, model, modelType):
     result = ""
     for currentModel in data.children:
         if currentModel.type == modelType:
-            result += "<option onclick='UpdateCookieModel(value, id)' id = '" + modelType.name + "' value = '" + currentModel.name + "'>" + currentModel.name + "</option>"
+            style = ""
+            if model != None and currentModel.name == model.name:
+                style = "style='background: #FFFACD;'"
+            result += "<option " + style + " onclick='UpdateCookieModel(value, id)' id = '" + modelType.name + "' value = '" + currentModel.name + "'>" + currentModel.name + "</option>"
     return result
 #---------------------------
 # Возвращает описание модели

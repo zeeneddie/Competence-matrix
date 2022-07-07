@@ -31,9 +31,12 @@
                         <section class="sec_row2">
                             <button onclick="AddModalWindow('Competence')" type="button" class="btn2 btn2-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalPush">Доб.</button>
                             <button onclick="ChangeModalWindow('Competence')" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalChange">Ред.</button>
-                            <button type="button" class="btn2 btn2-outline-primary">Удал.</button>
+                        </form>
+                            <form action="{% url 'modelDelete' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn2 btn2-outline-primary">Удал.</button>
+                            </form>
                         </section>
-                    </form>
                 </div>
 
                 <!--Индикаторы-->
