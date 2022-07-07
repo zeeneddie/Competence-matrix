@@ -92,7 +92,7 @@ def modelChange(request):
     data = loadJSON()
     modelTree = []
     modelTree.append(Model(None, None, None, FillModelTree(data)))
-    modelName = request.COOKIES.get('modelName')
+    modelName = request.COOKIES.get("model" + request.COOKIES.get("currentModelType"))
     modelDescription = request.COOKIES.get('modelDescription')
     modelTree = CLR_ModelUpdate(modelTree[0], modelTree, modelName, modelDescription)[0][0]
     modelDict = {

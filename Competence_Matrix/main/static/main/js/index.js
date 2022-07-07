@@ -38,6 +38,6 @@ function AddModalWindow(modelType){
 	document.cookie = "currentModelType="+modelType;
 }
 function SaveModelInfo(){
-	document.cookie = "modelName="+document.getElementById("modelName_Change").innerHTML;
+	document.cookie = "modelName="+ document.getElementById("modelName_Change").innerHTML;
 	document.cookie = "modelDescription="+document.getElementById("modelDescription_Change").value;
 }
