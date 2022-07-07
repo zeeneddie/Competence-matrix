@@ -53,11 +53,14 @@
                                 <textarea readonly class="form-control" id="floatingTextarea2" style="padding: 5px; height: 300px; border: 1px solid rgb(92, 139, 215); resize: none; ">{% block indicatorInfo %}{% endblock %}</textarea>
                             </div>
                         </section>
-                    </form>
-                    <section class="sec_row3">
-                        <button onclick="AddModalWindow('Indicator')" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalPush">Доб.</button>
-                        <button onclick="ChangeModalWindow('Indicator')" type="button" class="btn2 btn2-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalChange">Ред.</button>
-                        <button type="button" class="btn btn-outline-primary">Удал.</button>
+                        <section class="sec_row3">
+                            <button onclick="AddModalWindow('Indicator')" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalPush">Доб.</button>
+                            <button onclick="ChangeModalWindow('Indicator')" type="button" class="btn2 btn2-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalChange">Ред.</button>
+                        </form>
+                        <form action="{% url 'modelDelete' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-primary">Удал.</button>
+                        </form>
                     </section>
                 </div>
             </div>
@@ -81,9 +84,12 @@
                 <section class="sec_row3">
                     <button onclick="AddModalWindow('Knowledge')" type="button" class="btn2 btn3 btn2-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalPush">Доб.</button>
                     <button onclick="ChangeModalWindow('Knowledge')" type="button" class="btn btn3 btn-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalChange">Ред.</button>
-                    <button type="button" class="btn2 btn3 btn2-outline-primary">Удал.</button>
+                    </form> 
+                    <form action="{% url 'modelDelete' %}" method="post">
+                        {% csrf_token %}    
+                        <button type="submit" class="btn2 btn3 btn2-outline-primary">Удал.</button>
+                    </form>
                 </section>
-            </form> 
 
             <!--Умения-->
 
@@ -101,9 +107,12 @@
                 <section class="sec_row3">
                     <button onclick="AddModalWindow('Skill')" type="button" class="btn btn3 btn-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalPush">Доб.</button>
                     <button onclick="ChangeModalWindow('Skill')" type="button" class="btn2 btn3 btn2-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalChange">Ред.</button>
-                    <button type="button" class="btn btn3 btn-outline-primary">Удал.</button>
+                    </form>
+                    <form action="{% url 'modelDelete' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn3 btn-outline-primary">Удал.</button>
+                    </form>
                 </section>
-            </form>
 
             <!--Владения-->
 
@@ -121,9 +130,12 @@
                 <section class="sec_row3">
                     <button onclick="AddModalWindow('Possession')" type="button" class="btn2 btn3 btn2-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalPush">Доб.</button>
                     <button onclick="ChangeModalWindow('Possession')" type="button" class="btn btn3 btn-outline-primary" data-bs-toggle="modal" data-bs-target="#ModalChange">Ред.</button>
-                    <button type="button" class="btn2 btn3 btn2-outline-primary">Удал.</button>
+                    </form>
+                    <form action="{% url 'modelDelete' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn2 btn3 btn2-outline-primary">Удал.</button>
+                    </form>
                 </section>
-            </form>
         </div>
     </div>
 

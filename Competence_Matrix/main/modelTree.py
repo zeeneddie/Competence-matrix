@@ -79,7 +79,7 @@ def CLR_ModelDelete(subroot, currentModelList, key):
     if subroot.children:
         for currentModel in subroot.children:
             if currentModel.name == key:
-                continue
+                subroot.children.remove(currentModel)
             modelList.extend(CLR_ModelDelete(currentModel, currentModelList[:], key))
     else:
         modelList.append(currentModelList)
@@ -134,12 +134,13 @@ def CreateTree(data):
 #------------------------------
 def SelectList(data, model, modelType):
     result = ""
-    for currentModel in data.children:
-        if currentModel.type == modelType:
-            style = ""
-            if model != None and currentModel.name == model.name:
-                style = "style='background: #FFFACD;'"
-            result += "<option " + style + " onclick='UpdateCookieModel(value, id)' id = '" + modelType.name + "' value = '" + currentModel.name + "'>" + currentModel.name + "</option>"
+    if data.children:
+        for currentModel in data.children:
+            if currentModel.type == modelType:
+                style = ""
+                if model != None and currentModel.name == model.name:
+                    style = "style='background: #FFFACD;'"
+                result += "<option " + style + " onclick='UpdateCookieModel(value, id)' id = '" + modelType.name + "' value = '" + currentModel.name + "'>" + currentModel.name + "</option>"
     return result
 #---------------------------
 # Возвращает описание модели
