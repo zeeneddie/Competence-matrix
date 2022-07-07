@@ -71,6 +71,30 @@ def modelInfo(request):
 # Добавить модель
 #----------------
 def modelAdd(request):
+    data = loadJSON()
+    tree = []
+    tree.append(Model(None, None, None, modelTree.FillModelTree(data)))
+    key = "" #request.COOKIES.get("model" + request.COOKIES.get("currentModelType"))
+    modelName = request.COOKIES.get("modelNameAdd")
+    modelDescription = request.COOKIES.get("modelDescriptionAdd")
+    modelType = modelTree.GetModelType(request.COOKIES.get("currentModelType"))
+    match request.COOKIES.get("currentModelType"):
+        case "Competence":
+            tree[0].children.append(Model(modelName, modelType, modelDescription, None))
+            modelDict = {
+                "children": modelTree.FillJSONDictionary(tree[0])
+            }
+            saveJSON(modelDict)
+            return redirect('modelInfo')
+        case "Indicator":
+            key = request.COOKIES.get("modelCompetence")
+        case _:
+            key = request.COOKIES.get("modelIndicator")
+    tree = modelTree.CLR_ModelAdd(tree[0], tree, key , modelName, modelDescription, modelType)[0][0]
+    modelDict = {
+        "children": modelTree.FillJSONDictionary(tree)
+    }
+    saveJSON(modelDict)
     return redirect('modelInfo')
 #-------------------------
 # Изменить описание модели

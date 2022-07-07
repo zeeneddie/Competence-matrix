@@ -8,3 +8,5 @@ class Model:
         self.type = type
         self.description = description
         self.children = children
+    def __str__(self):
+        return self.name + " " + self.type + " " + self.description

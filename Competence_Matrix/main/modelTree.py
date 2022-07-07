@@ -84,6 +84,25 @@ def CLR_ModelDelete(subroot, currentModelList, key):
     else:
         modelList.append(currentModelList)
     return modelList
+#---------------------------------------
+# Прямой обход дерева (добавление модели)
+#---------------------------------------
+def CLR_ModelAdd(subroot, currentModelList, key, modelName, modelDescription, modelType):
+    modelList = []
+    if currentModelList is None:
+        currentModelList = []
+    currentModelList.append(subroot)
+    if subroot.children:
+        for currentModel in subroot.children:
+            if currentModel.name == key:
+                if currentModel.children == None:
+                    currentModel.children = []
+                currentModel.children.append(Model(modelName, modelType, modelDescription, None))
+                continue
+            modelList.extend(CLR_ModelAdd(currentModel, currentModelList[:], key, modelName, modelDescription, modelType))
+    else:
+        modelList.append(currentModelList)
+    return modelList
 #----------------------
 # Получение типа модели
 #----------------------

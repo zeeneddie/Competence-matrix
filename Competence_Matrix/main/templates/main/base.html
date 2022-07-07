@@ -34,7 +34,7 @@
                         </form>
                             <form action="{% url 'modelDelete' %}" method="post">
                                 {% csrf_token %}
-                                <button type="submit" class="btn2 btn2-outline-primary">Удал.</button>
+                                <button onclick="AddModalWindow('Competence')" type="submit" class="btn2 btn2-outline-primary">Удал.</button>
                             </form>
                         </section>
                 </div>
@@ -59,7 +59,7 @@
                         </form>
                         <form action="{% url 'modelDelete' %}" method="post">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-outline-primary">Удал.</button>
+                            <button onclick="AddModalWindow('Indicator')" type="submit" class="btn btn-outline-primary">Удал.</button>
                         </form>
                     </section>
                 </div>
@@ -87,7 +87,7 @@
                     </form> 
                     <form action="{% url 'modelDelete' %}" method="post">
                         {% csrf_token %}    
-                        <button type="submit" class="btn2 btn3 btn2-outline-primary">Удал.</button>
+                        <button onclick="AddModalWindow('Knowledge')" type="submit" class="btn2 btn3 btn2-outline-primary">Удал.</button>
                     </form>
                 </section>
 
@@ -110,7 +110,7 @@
                     </form>
                     <form action="{% url 'modelDelete' %}" method="post">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn3 btn-outline-primary">Удал.</button>
+                        <button onclick="AddModalWindow('Skill')" type="submit" class="btn btn3 btn-outline-primary">Удал.</button>
                     </form>
                 </section>
 
@@ -133,7 +133,7 @@
                     </form>
                     <form action="{% url 'modelDelete' %}" method="post">
                         {% csrf_token %}
-                        <button type="submit" class="btn2 btn3 btn2-outline-primary">Удал.</button>
+                        <button onclick="AddModalWindow('Possession')" type="submit" class="btn2 btn3 btn2-outline-primary">Удал.</button>
                     </form>
                 </section>
         </div>
@@ -170,9 +170,9 @@
                     <div class="mb-3">
                         <div class="row_divs" style="margin-bottom:20px;">
                             <label for="cod-text" class="col-form-label">Код:</label>
-                            <textarea id="modelName" class="form-control" placeholder="Leave a comment here" style="height: 30px; margin-left: 5px; border: 1px solid rgb(92, 139, 215); resize: none; "></textarea>
+                            <textarea id="modelName_Add" class="form-control" placeholder="Leave a comment here" style="height: 30px; margin-left: 5px; border: 1px solid rgb(92, 139, 215); resize: none; "></textarea>
                         </div>
-                        <textarea id="modelDescription" class="form-control" name="textOfPush" id="descrip-text" placeholder="Описание"></textarea>
+                        <textarea id="modelDescription_Add" class="form-control" name="textOfPush" id="descrip-text" placeholder="Описание"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
