@@ -8,12 +8,10 @@
 ### :earth_asia: Языки
 ```
 Python
-HTML
-CSS
 JavaScript
 C#
 ```
-### :desktop_computer: Веб-фреймворк
+### :desktop_computer: Бекэнд
 ```
 Django
 ```
